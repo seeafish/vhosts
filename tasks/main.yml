@@ -1,0 +1,30 @@
+---
+- name: Setup vhost.d directory
+  file: path={{ apache_vhost_dir }} state=directory
+  when: ansible_os_family == 'RedHat'
+
+- name: Create sftponly group
+  group: name=sftponly state=present
+
+- name: Create user
+  user: name={{ item.sftp_user }} groups=sftponly home={{ item.vhost_home }} password={{ item.sftp_pass }} shell=/sbin/nologin state=present
+  with_items: vhosts
+  tags: user
+
+- name: Create jail directory
+  file: path={{ item.vhost_home }} state=directory owner=root group=root mode=0755
+  with_items: vhosts
+  tags: jail_dir
+
+- name: Create document root
+  file: path={{ item.vhost_home }}/public_html state=directory owner={{ item.sftp_user }} group=apache mode=0755
+  with_items: vhosts
+  tags: doc_root
+
+- name: Create apache vhost
+  template: src=vhost.conf.j2 dest={{ apache_vhost_dir }}/{{ item.site_url }}.conf owner=root mode=0644
+  with_items: vhosts
+  tags: vhost
+
+- name: Restart apache
+  service: name=httpd state=restarted

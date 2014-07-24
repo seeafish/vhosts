@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerName {{ item.site_url }}
+    ServerAlias www.{{ item.site_url }}
+
+    DocumentRoot {{ item.vhost_home }}/public_html
+    <Directory {{ item.vhost_home }}/public_html>
+        Options -Indexes +FollowSymLinks -MultiViews
+        AllowOverride All
+    </Directory>
+
+    CustomLog {{ apache_logs }}/{{ item.site_url }}-access.log combined
+    ErrorLog {{ apache_logs }}/{{ item.site_url }}-error.log
+    LogLevel warn
+</VirtualHost>

@@ -1,0 +1,4 @@
+---
+vhosts:
+    - { site_url: 'url', vhost_home: 'document_root', sftp_user: 'user', sftp_pass: 'sha_512_password' }
+    - { site_url: 'url', vhost_home: 'document_root', sftp_user: 'user', sftp_pass: 'sha_512_password' }
