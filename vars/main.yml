@@ -1,4 +1,5 @@
 ---
+vhost_parent_root: '/var/www/vhosts'
 vhosts:
-    - { site_url: 'url', vhost_home: 'document_root', sftp_user: 'user', sftp_pass: 'sha_512_password' }
-    - { site_url: 'url', vhost_home: 'document_root', sftp_user: 'user', sftp_pass: 'sha_512_password' }
+    - { site_url: 'site1.com', vhost_home: '{{ vhost_parent_root }}/site1.com', sftp_user: 'site1', sftp_pass: 'sha_512_password' }
+    - { site_url: 'site2.com', vhost_home: '{{ vhost_parent_root }}/site2.com', sftp_user: 'site2', sftp_pass: 'sha_512_password' }
