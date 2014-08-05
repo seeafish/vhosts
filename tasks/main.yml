@@ -34,4 +34,6 @@
   with_items: vhosts
   when: ansible_os_family == 'Debian'
   tags: enable_vhost
-  notify: restart apache
+
+- name: Restart apache
+  service: name={{ apache_process }} state=restarted
